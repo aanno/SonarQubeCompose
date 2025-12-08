@@ -3,6 +3,7 @@ services:
     image: docker.io/library/sonarqube:25.7.0.110598-community
     depends_on:
       - pg_sonar
+      - es_sonar
     env_file:
       - .env
     ulimits:
@@ -28,7 +29,7 @@ services:
     networks:
       - sonarqube
   # https://medium.com/@varun.thantry07/how-to-set-up-a-sonarqube-server-with-docker-compose-with-postgresql-and-elasticsearch-2d273ad93a3c
-  elasticsearch:
+  es_sonar:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.15.3
     container_name: elasticsearch
     restart: always
