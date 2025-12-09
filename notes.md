@@ -1,5 +1,14 @@
 # Notes
 
+* [community support](https://community.sonarsource.com)
+
+## GitLab
+
+* [Setting up GitLab integration at global level](https://docs.sonarsource.com/sonarqube-server/devops-platform-integration/gitlab-integration/global-setup)
+* [Setting up GitLab integration at project level](https://docs.sonarsource.com/sonarqube-server/devops-platform-integration/gitlab-integration/setting-up-at-project-level)
+* [GitLab CI](https://docs.sonarsource.com/sonarqube-cloud/advanced-setup/ci-based-analysis/gitlab-ci)
+  + needs: [Docker executor](https://docs.gitlab.com/runner/executors/#docker-executor)
+
 ## Challenges
 
 * Access Token does not work. Is it a problem for the external setup only?
@@ -35,6 +44,11 @@
 Interesting:
 
 * https://github.com/jborgers/sonar-pmd
+* https://github.com/SonarQubeCommunity/sonar-jmeter
+
+Commercial but interesting:
+
+* https://www.hello2morrow.com/products/sonargraph
 
 ### Develop own Plugin
 
