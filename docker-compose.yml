@@ -3,7 +3,6 @@ services:
     image: docker.io/library/sonarqube:25.7.0.110598-community
     depends_on:
       - pg_sonar
-      - es_sonar
     env_file:
       - .env
     ulimits:
@@ -28,24 +27,6 @@ services:
       - pg_sonar:/var/lib/postgresql
     networks:
       - sonarqube
-  # https://medium.com/@varun.thantry07/how-to-set-up-a-sonarqube-server-with-docker-compose-with-postgresql-and-elasticsearch-2d273ad93a3c
-  es_sonar:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.3
-    container_name: elasticsearch
-    restart: always
-    environment:
-      discovery.type: single-node
-      xpack.security.enabled: "false"
-      ES_JAVA_OPTS: "-Xms2g -Xmx2g"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
-    volumes:
-      - es_sonar_data:/usr/share/elasticsearch/data
 
 # echo "sonarqube_data sonarqube_extensions sonarqube_logs sonarqube_temp pg_sonar_config pg_sonar_data es_sonar_data" | xargs -n 1 podman volume create
 volumes:
@@ -58,8 +39,6 @@ volumes:
   sonarqube_temp:
     external: true
   pg_sonar:
-    external: true
-  es_sonar_data:
     external: true
 
 # podman network create sonarqube
