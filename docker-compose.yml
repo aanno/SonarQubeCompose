@@ -40,7 +40,6 @@ services:
   # level=WARN source=main.go:85 msg="Error loading config" err="error opening config file \"postgres_exporter.yml\": open postgres_exporter.yml: no such file or directory"
   pg_sonar_exporter:
     image: quay.io/prometheuscommunity/postgres-exporter:latest
-    container_name: postgres-exporter
     environment:
       DATA_SOURCE_NAME: "postgresql://sonar:sonarpass@postgres:5432/sonarqube?sslmode=disable"
     networks:
@@ -49,6 +48,10 @@ services:
       - pg_sonar
     ports:
       - "9187:9187"
+  # https://github.com/prometheus/node_exporter
+  # configuration: https://github.com/prometheus/exporter-toolkit/blob/master/docs/web-configuration.md
+  # Local containers see this at: http://host.docker.internal:9100/metrics
+  # You could see this at http://localhost:9100/metrics
   node-exporter:
     image: quay.io/prometheus/node-exporter:latest
     container_name: node-exporter

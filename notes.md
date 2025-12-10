@@ -83,3 +83,14 @@ Commercial but interesting:
 * [Monitoring JMX](https://docs.sonarsource.com/sonarqube-server/server-update-and-maintenance/monitoring/instance)
 * [Setting up with Prometheus server](https://docs.sonarsource.com/sonarqube-server/server-installation/on-kubernetes-or-openshift/set-up-monitoring/prometheus)
 * [List of Prometheus metrics](https://docs.sonarsource.com/sonarqube-server/server-installation/on-kubernetes-or-openshift/set-up-monitoring/prometheus-metrics)
+
+### local monitoring
+
+* http://localhost:9000/api/monitoring/metrics
+  simple text based
+* http://localhost:9000/api/system/health
+  health only
+
+## Sonarqube API
+
+* [API documentation](https://next.sonarqube.com/sonarqube/web_api/api/measures)
