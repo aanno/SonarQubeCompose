@@ -42,6 +42,11 @@
 ## Sonarqube Plugins
 
 * [install plugin](https://docs.sonarsource.com/sonarqube-server/server-installation/plugins/install-a-plugin)
+* [marketplace](https://docs.sonarsource.com/sonarqube-server/server-update-and-maintenance/update/marketplace)
+  + [marketplace json files](https://downloads.sonarsource.com/?prefix=sonarqube/update)
+  + [official downloads](https://binaries.sonarsource.com/)
+  + most free plugins are on github
+* [Plugin version matrix](https://docs.sonarsource.com/sonarqube-server/server-installation/plugins/plugin-version-matrix)
 
 Interesting:
 
@@ -64,6 +69,7 @@ Commercial but interesting:
 ### Commercial and free Plugins
 
 * https://www.sonarplugins.com/
+  A third-party website called sonarplugins.com also exists. This website is not the same as the Marketplace and is not endorsed by, affiliated with, maintained, authorized, or sponsored by Sonar.
 
 ## JaCoCo
 
@@ -73,4 +79,7 @@ Commercial but interesting:
 
 ## Monitoring
 
-* [Prometheus Monitoring](https://docs.sonarsource.com/sonarqube-server/9.9/instance-administration/monitoring)
+* [Prometheus Monitoring (9.9)](https://docs.sonarsource.com/sonarqube-server/9.9/instance-administration/monitoring)
+* [Monitoring JMX](https://docs.sonarsource.com/sonarqube-server/server-update-and-maintenance/monitoring/instance)
+* [Setting up with Prometheus server](https://docs.sonarsource.com/sonarqube-server/server-installation/on-kubernetes-or-openshift/set-up-monitoring/prometheus)
+* [List of Prometheus metrics](https://docs.sonarsource.com/sonarqube-server/server-installation/on-kubernetes-or-openshift/set-up-monitoring/prometheus-metrics)

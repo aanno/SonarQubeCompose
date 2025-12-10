@@ -37,8 +37,63 @@ services:
       - pg_sonar:/var/lib/postgresql
     networks:
       - sonarqube
+  # level=WARN source=main.go:85 msg="Error loading config" err="error opening config file \"postgres_exporter.yml\": open postgres_exporter.yml: no such file or directory"
+  pg_sonar_exporter:
+    image: quay.io/prometheuscommunity/postgres-exporter:latest
+    container_name: postgres-exporter
+    environment:
+      DATA_SOURCE_NAME: "postgresql://sonar:sonarpass@postgres:5432/sonarqube?sslmode=disable"
+    networks:
+      - sonarqube
+    depends_on:
+      - pg_sonar
+    ports:
+      - "9187:9187"
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node-exporter
+    pid: "host"
+    network_mode: "host"
+    command:
+      - --path.rootfs=/host
+    volumes:
+      - /:/host:ro,rslave
+  # see if prometheus receives metrics on http://localhost:9099/targets
+  prometheus:
+    image: quay.io/prometheus/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:z,ro
+      - prometheus:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+    ports:
+      # Fedora: cockpit runs on 9090
+      - "9099:9090"
+    networks:
+      - sonarqube
+    depends_on:
+      - sonarqube
+      - pg_sonar_exporter
+      - node-exporter
+  grafana:
+    image: docker.io/grafana/grafana-oss:latest
+    container_name: grafana
+    env_file:
+      - .env
+    volumes:
+      - grafana:/var/lib/grafana
+    ports:
+      # gaeko-ui runs on 3000
+      - "3010:3000"
+    networks:
+      - sonarqube
+    depends_on:
+      - prometheus
 
-# echo "sonarqube_data sonarqube_extensions sonarqube_logs sonarqube_temp pg_sonar_config pg_sonar_data es_sonar_data" | xargs -n 1 podman volume create
+# echo "sonarqube_data sonarqube_extensions sonarqube_logs sonarqube_temp pg_sonar_config pg_sonar_data es_sonar_data grafana prometheus" | xargs -n 1 podman volume create
 volumes:
   sonarqube_data:
     external: true
@@ -49,6 +104,10 @@ volumes:
   sonarqube_temp:
     external: true
   pg_sonar:
+    external: true
+  grafana:
+    external: true
+  prometheus:
     external: true
 
 # podman network create sonarqube

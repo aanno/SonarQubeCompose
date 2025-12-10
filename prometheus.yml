@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "sonarqube-jvm"
+    static_configs:
+      - targets: ["sonarqube:9404"]
+
+  - job_name: "postgres"
+    static_configs:
+      - targets: ["postgres-exporter:9187"]
+
+  - job_name: "node"
+    static_configs:
+      - targets: ["localhost:9100"]  # node-exporter on host network
+
+  # Add more jobs if you integrate cAdvisor or Podman-specific exporters
