@@ -1,6 +1,11 @@
 services:
   sonarqube:
     image: docker.io/library/sonarqube:25.7.0.110598-community
+    ports:
+      # SonarQube UI
+      - "9000:9000"
+      # JMX exporter metrics
+      - "9404:9404"
     depends_on:
       - pg_sonar
     env_file:
@@ -23,6 +28,11 @@ services:
     image: docker.io/library/postgres:18
     env_file:
       - .env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${SONAR_POSTGRES_DB} -U $${SONAR_POSTGRES_USER}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - pg_sonar:/var/lib/postgresql
     networks:

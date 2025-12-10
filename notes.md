@@ -41,6 +41,8 @@
 
 ## Sonarqube Plugins
 
+* [install plugin](https://docs.sonarsource.com/sonarqube-server/server-installation/plugins/install-a-plugin)
+
 Interesting:
 
 * https://github.com/jborgers/sonar-pmd
@@ -53,6 +55,7 @@ Commercial but interesting:
 ### Develop own Plugin
 
 * https://docs.sonarsource.com/sonarqube-server/extension-guide/developing-a-plugin/plugin-basics
+* https://github.com/SonarSource/sonar-plugin-api
 
 ### Community Plugins
 
@@ -63,3 +66,11 @@ Commercial but interesting:
 * https://www.sonarplugins.com/
 
 ## JaCoCo
+
+* [Code Coverage with SonarQube and JaCoCo](https://www.baeldung.com/sonarqube-jacoco-code-coverage)
+* https://github.com/jacoco/jacoco
+* https://www.jacoco.org/jacoco/
+
+## Monitoring
+
+* [Prometheus Monitoring](https://docs.sonarsource.com/sonarqube-server/9.9/instance-administration/monitoring)
