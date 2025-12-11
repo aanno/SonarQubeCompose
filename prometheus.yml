@@ -6,7 +6,7 @@ scrape_configs:
     metrics_path: /api/monitoring/metrics
     static_configs:
       # - targets: ["sonarqube:9000"]
-      - targets: ["host.docker.internal:9000"]
+      - targets: ["host.docker.internal:9001"]
   - job_name: "postgres"
     static_configs:
       - targets: ["pg_sonar_exporter:9187"]

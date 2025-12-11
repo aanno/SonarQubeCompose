@@ -1,0 +1,15 @@
+{
+    http_port  {$CADDY_HTTP_PORT}
+    https_port {$CADDY_HTTPS_PORT}
+}
+
+{$SONAR_METRICS_HOST:sonarqube-metrics.localhost}:{$CADDY_HTTP_PORT} {
+
+    @sonarMetrics {
+        path /api/monitoring/metrics
+    }
+
+    reverse_proxy @sonarMetrics http://{$SONAR_BACKEND_HOST:host.docker.internal}:9000 {
+        header_up X-Sonar-Passcode "{$SONAR_WEB_SYSTEMPASSCODE}"
+    }
+}

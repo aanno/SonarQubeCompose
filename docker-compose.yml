@@ -1,6 +1,7 @@
 services:
   sonarqube:
     image: docker.io/library/sonarqube:25.7.0.110598-community
+    restart: unless-stopped
     ports:
       # SonarQube UI
       - "9000:9000"
@@ -26,6 +27,7 @@ services:
   pg_sonar:
     # image: postgres:17.5
     image: docker.io/library/postgres:18
+    restart: unless-stopped
     env_file:
       - .env
     healthcheck:
@@ -40,6 +42,7 @@ services:
   # level=WARN source=main.go:85 msg="Error loading config" err="error opening config file \"postgres_exporter.yml\": open postgres_exporter.yml: no such file or directory"
   pg_sonar_exporter:
     image: quay.io/prometheuscommunity/postgres-exporter:latest
+    restart: unless-stopped
     environment:
       DATA_SOURCE_NAME: "postgresql://sonar:sonarpass@postgres:5432/sonarqube?sslmode=disable"
     networks:
@@ -54,7 +57,7 @@ services:
   # You could see this at http://localhost:9100/metrics
   node-exporter:
     image: quay.io/prometheus/node-exporter:latest
-    container_name: node-exporter
+    restart: unless-stopped
     pid: "host"
     network_mode: "host"
     command:
@@ -64,7 +67,7 @@ services:
   # see if prometheus receives metrics on http://localhost:9099/targets
   prometheus:
     image: quay.io/prometheus/prometheus:latest
-    container_name: prometheus
+    restart: unless-stopped
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:z,ro
       - prometheus:/prometheus
@@ -83,7 +86,7 @@ services:
       - node-exporter
   grafana:
     image: docker.io/grafana/grafana-oss:latest
-    container_name: grafana
+    restart: unless-stopped
     env_file:
       - .env
     volumes:
@@ -95,6 +98,26 @@ services:
       - sonarqube
     depends_on:
       - prometheus
+  caddy:
+    image: docker.io/library/caddy:2.10
+    restart: unless-stopped
+    env_file:
+      - .env
+    # cap_add:
+    #   - NET_ADMIN
+    ports:
+      # - "80:80"
+      # - "443:443"
+      # - "443:443/udp"
+      - "9001:9001"
+      - "9002:9002"
+      - "9002:9002/udp"
+    volumes:
+      - $PWD/caddy:/etc/caddy:z
+      # - $PWD/site:/srv:z
+      - caddy_data:/data
+      - caddy_config:/config
+
 
 # echo "sonarqube_data sonarqube_extensions sonarqube_logs sonarqube_temp pg_sonar_config pg_sonar_data es_sonar_data grafana prometheus" | xargs -n 1 podman volume create
 volumes:
@@ -111,6 +134,10 @@ volumes:
   grafana:
     external: true
   prometheus:
+    external: true
+  caddy_data:
+    external: true
+  caddy_config:
     external: true
 
 # podman network create sonarqube
