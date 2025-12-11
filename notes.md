@@ -94,3 +94,8 @@ Commercial but interesting:
 ## Sonarqube API
 
 * [API documentation](https://next.sonarqube.com/sonarqube/web_api/api/measures)
+
+## Sonarqube Rules
+
+* https://rules.sonarsource.com/
+* [custom rules](https://docs.sonarsource.com/sonarqube-server/extension-guide/adding-coding-rules)

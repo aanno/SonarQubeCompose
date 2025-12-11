@@ -6,7 +6,7 @@ services:
       # SonarQube UI
       - "9000:9000"
       # JMX exporter metrics
-      - "9404:9404"
+      - "9005:9005"
     depends_on:
       - pg_sonar
     env_file:
@@ -16,6 +16,8 @@ services:
         soft: 65536
         hard: 65536
     volumes:
+      - ./jmx_prometheus_javaagent.jar:/opt/sonarqube/jmx_prometheus_javaagent.jar:z,ro
+      - ./jmx-prometheus-config.yml:/opt/sonarqube/jmx-prometheus-config.yml:z,ro
       - sonarqube_data:/opt/sonarqube/data
       - sonarqube_extensions:/opt/sonarqube/extensions
       - sonarqube_logs:/opt/sonarqube/logs
