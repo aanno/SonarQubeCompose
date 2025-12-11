@@ -22,8 +22,6 @@ services:
       - sonarqube_temp:/opt/sonarqube/temp
     networks:
       - sonarqube
-    ports:
-      - "9000:9000"
   pg_sonar:
     # image: postgres:17.5
     image: docker.io/library/postgres:18
@@ -31,7 +29,7 @@ services:
     env_file:
       - .env
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -d $${SONAR_POSTGRES_DB} -U $${SONAR_POSTGRES_USER}" ]
+      test: [ "CMD-SHELL", "pg_isready -d ${SONAR_POSTGRES_DB} -U ${SONAR_JDBC_USERNAME}" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -43,8 +41,11 @@ services:
   pg_sonar_exporter:
     image: quay.io/prometheuscommunity/postgres-exporter:latest
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
-      DATA_SOURCE_NAME: "postgresql://sonar:sonarpass@postgres:5432/sonarqube?sslmode=disable"
+      # DATA_SOURCE_NAME: "postgresql://sonar:sonarpass@postgres:5432/sonarqube?sslmode=disable"
+      DATA_SOURCE_NAME: "postgresql://${SONAR_JDBC_USERNAME}:${SONAR_JDBC_PASSWORD}@${SONAR_POSTGRES_HOST}:5432/${SONAR_POSTGRES_DB}?sslmode=disable"
     networks:
       - sonarqube
     depends_on:
