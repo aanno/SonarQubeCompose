@@ -16,5 +16,6 @@ scrape_configs:
   - job_name: "node"
     static_configs:
       - targets: ["host.docker.internal:9100"]  # node-exporter on host network
-
-  # Add more jobs if you integrate cAdvisor or Podman-specific exporters
+  - job_name: "my-podman-rootless"
+    static_configs:
+      - targets: ['podman-exporter:9882']

@@ -67,6 +67,24 @@ services:
       - --path.rootfs=/host
     volumes:
       - /:/host:ro,rslave
+  # podman-exporter:
+  #   # https://github.com/containers/prometheus-podman-exporter/blob/main/install.md#container-image
+  #   image: quay.io/navidys/prometheus-podman-exporter:latest
+  #   restart: unless-stopped
+  #   # ports:
+  #   #   - "9882:9882"
+  #   security_opt:
+  #     - label=disable
+  #   # userns_mode: keep-id
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     # Rootless Podman socket path inside the container
+  #     CONTAINER_HOST: "unix:///run/podman/podman.sock"
+  #   volumes:
+  #     - "${DOCKER_SOCKET}:/run/podman/podman.sock:z,ro"
+  #   # command:
+  #   #   - "--collector.enable-all"
   # see if prometheus receives metrics on http://localhost:9099/targets
   prometheus:
     image: quay.io/prometheus/prometheus:latest

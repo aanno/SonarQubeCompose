@@ -9,10 +9,6 @@
 * [GitLab CI](https://docs.sonarsource.com/sonarqube-cloud/advanced-setup/ci-based-analysis/gitlab-ci)
   + needs: [Docker executor](https://docs.gitlab.com/runner/executors/#docker-executor)
 
-## Challenges
-
-* Access Token does not work. Is it a problem for the external setup only?
-
 ## Configuration
 
 * GitLab _is_ supported
