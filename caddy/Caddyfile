@@ -18,13 +18,13 @@ localhost:80 {
     
     # SonarQube
     handle /sonarqube/* {
-        uri strip_prefix /sonarqube
+        # uri strip_prefix /sonarqube
         reverse_proxy sonarqube:9000
     }
     
     # Prometheus  
     handle /prometheus/* {
-        uri strip_prefix /prometheus
+        # uri strip_prefix /prometheus
         reverse_proxy prometheus:9090
     }
     
