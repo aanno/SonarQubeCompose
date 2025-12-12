@@ -79,8 +79,8 @@ services:
       - --storage.tsdb.path=/prometheus
       - --web.enable-lifecycle
       # web context
-      - "--web.external-url=http://localhost/prometheus/"
-      - "--web.route-prefix=/prometheus"
+      # - "--web.external-url=http://localhost/prometheus/"
+      # - "--web.route-prefix=/prometheus"
     ports:
       # Fedora: cockpit runs on 9090
       - "9099:9090"

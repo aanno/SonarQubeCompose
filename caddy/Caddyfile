@@ -3,7 +3,6 @@
 }
 
 {$SONAR_METRICS_HOST:sonarqube-metrics.localhost}:{$CADDY_HTTP_PORT} {
-
     @sonarMetrics {
         path /api/monitoring/metrics
     }
@@ -13,23 +12,14 @@
     }
 }
 
-localhost:80 {
-    # tls internal
-    
-    # SonarQube
-    handle /sonarqube/* {
-        # uri strip_prefix /sonarqube
-        reverse_proxy sonarqube:9000
-    }
-    
-    # Prometheus  
-    handle /prometheus/* {
-        # uri strip_prefix /prometheus
-        reverse_proxy prometheus:9090
-    }
-    
-    # Grafana
-    handle /grafana/* {
-        reverse_proxy grafana:3000
-    }
+sonarqube.local:80 {
+    reverse_proxy sonarqube:9000
+}
+
+grafana.local:80 {
+    reverse_proxy grafana:3000
+}
+
+prometheus.local:80 {
+    reverse_proxy prometheus:9090
 }
