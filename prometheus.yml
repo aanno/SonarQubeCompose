@@ -2,11 +2,17 @@ global:
   scrape_interval: 15s
 
 scrape_configs:
-  - job_name: "sonarqube-jvm"
+  - job_name: "sonarqube-jvm-over-proxy"
     metrics_path: /api/monitoring/metrics
     static_configs:
-      # - targets: ["sonarqube:9000"]
       - targets: ["host.docker.internal:9001"]
+  - job_name: "sonarqube-jvm"
+    metrics_path: /api/monitoring/metrics
+    http_headers:
+      X-Sonar-Passcode:
+        values: ['my-secret-passcode']
+    static_configs:
+      - targets: ["sonarqube:9000"]
   - job_name: 'sonarqube-jmx'
     static_configs:
     - targets: ['sonarqube:9005']

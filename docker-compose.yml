@@ -87,7 +87,8 @@ services:
   #   #   - "--collector.enable-all"
   # see if prometheus receives metrics on http://localhost:9099/targets
   prometheus:
-    image: quay.io/prometheus/prometheus:latest
+    # image: quay.io/prometheus/prometheus:latest
+    image: quay.io/prometheus/prometheus:v3.8.0
     restart: unless-stopped
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:z,ro
