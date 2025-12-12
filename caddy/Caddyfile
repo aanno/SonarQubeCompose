@@ -10,15 +10,19 @@
 	}
 }
 
-# {$SONAR_METRICS_HOST:sonarqube-metrics.localhost}:{$CADDY_HTTP_PORT} {
-# 	@sonarMetrics {
-# 		path /api/monitoring/metrics
-# 	}
+http://{$SONAR_METRICS_HOST}:{$CADDY_HTTP_PORT} {
+	bind 0.0.0.0
 
-# 	reverse_proxy @sonarMetrics http://{$SONAR_BACKEND_HOST:host.docker.internal}:9000 {
-# 		header_up X-Sonar-Passcode "{$SONAR_WEB_SYSTEMPASSCODE}"
-# 	}
-# }
+	# respond /debug "Host: {http.request.host}, Path: {http.request.uri.path}" 200
+
+	@sonarMetrics {
+		path /api/monitoring/metrics
+	}
+
+	reverse_proxy @sonarMetrics http://{$SONAR_BACKEND_HOST}:9000 {
+		header_up X-Sonar-Passcode "{$SONAR_WEB_SYSTEMPASSCODE}"
+	}
+}
 
 # HTTP virtual hosts (port 80) → redirect to HTTPS
 sonarqube.my:80 {
