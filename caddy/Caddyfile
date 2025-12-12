@@ -1,25 +1,39 @@
 {
-    auto_https off
+	# http_port {$CADDY_HTTP_PORT}
+	# https_port {$CADDY_HTTPS_PORT}
+	auto_https off
+
+	log {
+		output stderr
+		level DEBUG
+		format console
+	}
 }
 
-{$SONAR_METRICS_HOST:sonarqube-metrics.localhost}:{$CADDY_HTTP_PORT} {
-    @sonarMetrics {
-        path /api/monitoring/metrics
-    }
+# {$SONAR_METRICS_HOST:sonarqube-metrics.localhost}:{$CADDY_HTTP_PORT} {
+# 	@sonarMetrics {
+# 		path /api/monitoring/metrics
+# 	}
 
-    reverse_proxy @sonarMetrics http://{$SONAR_BACKEND_HOST:host.docker.internal}:9000 {
-        header_up X-Sonar-Passcode "{$SONAR_WEB_SYSTEMPASSCODE}"
-    }
+# 	reverse_proxy @sonarMetrics http://{$SONAR_BACKEND_HOST:host.docker.internal}:9000 {
+# 		header_up X-Sonar-Passcode "{$SONAR_WEB_SYSTEMPASSCODE}"
+# 	}
+# }
+
+sonarqube.my:80 {
+	tls internal
+	bind 0.0.0.0
+	reverse_proxy http://sonarqube:9000
 }
 
-sonarqube.local:80 {
-    reverse_proxy sonarqube:9000
+grafana.my:80 {
+	tls internal
+	bind 0.0.0.0
+	reverse_proxy http://grafana:3000
 }
 
-grafana.local:80 {
-    reverse_proxy grafana:3000
-}
-
-prometheus.local:80 {
-    reverse_proxy prometheus:9090
+prometheus.my:80 {
+	tls internal
+	bind 0.0.0.0
+	reverse_proxy http://prometheus:9090
 }
