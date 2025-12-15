@@ -85,12 +85,16 @@ services:
       - --config.file=/etc/prometheus/prometheus.yml
       - --storage.tsdb.path=/prometheus
       - --web.enable-lifecycle
+      # https://prometheus.io/docs/operating/security/
+      - --web.enable-admin-api
+      # https://stackoverflow.com/questions/47414593/configure-prometheus-to-use-non-default-port
+      - --web.listen-address=:9099
       # web context
       # - "--web.external-url=http://localhost/prometheus/"
       # - "--web.route-prefix=/prometheus"
     ports:
-      # Fedora: cockpit runs on 9090
-      - "9099:9090"
+      # Fedora: cockpit runs on 9090 - hence standard port is discouraged
+      - "9099:9099"
     networks:
       - sonarqube
     depends_on:
@@ -106,8 +110,9 @@ services:
       - grafana:/var/lib/grafana
       - ./export:/export:z
     ports:
-      # gaeko-ui runs on 3000
-      - "3010:3000"
+      # gaeko-ui runs on 3000 - hence standard port is discouraged
+      # GF_SERVER_HTTP_PORT
+      - "3010:3010"
     networks:
       - sonarqube
     depends_on:
