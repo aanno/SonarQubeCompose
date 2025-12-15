@@ -60,19 +60,6 @@ services:
       - pg_sonar
     ports:
       - "9187:9187"
-  # https://github.com/prometheus/node_exporter
-  # configuration: https://github.com/prometheus/exporter-toolkit/blob/master/docs/web-configuration.md
-  # Local containers see this at: http://host.docker.internal:9100/metrics
-  # You could see this at http://localhost:9100/metrics
-  node-exporter:
-    image: quay.io/prometheus/node-exporter:latest
-    restart: unless-stopped
-    pid: "host"
-    network_mode: "host"
-    command:
-      - --path.rootfs=/host
-    volumes:
-      - /:/host:ro,rslave
   prometheus:
     # image: quay.io/prometheus/prometheus:latest
     image: quay.io/prometheus/prometheus:v3.8.0
@@ -100,7 +87,6 @@ services:
     depends_on:
       - sonarqube
       - pg_sonar_exporter
-      - node-exporter
   grafana:
     image: docker.io/grafana/grafana-oss:latest
     restart: unless-stopped

@@ -23,6 +23,7 @@ fi
 # https://github.com/containers/prometheus-podman-exporter/blob/main/install.md#container-image
 # systemctl start --user podman.socket
 podman run --name "$NAME" -d \
+  --restart unless-stopped \
   --network sonarqube \
   -e CONTAINER_HOST=unix:///run/podman/podman.sock \
   -v $DOCKER_SOCKET:/run/podman/podman.sock \

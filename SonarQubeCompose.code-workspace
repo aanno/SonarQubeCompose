@@ -4,5 +4,18 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {},
+	"extensions": {
+		"recommendations": [
+			"redhat.vscode-yaml",
+			"ms-azuretools.vscode-containers",
+			"hangxingliu.vscode-systemd-support",
+			"yzhang.markdown-all-in-one",
+			"dreamcatcher45.podmanager",
+			"matthewpi.caddyfile-support",
+			"Grafana.grafana-vscode",
+			"mads-hartmann.bash-ide-vscode"
+		],
+		"unwantedRecommendations": []
+	}
 }
