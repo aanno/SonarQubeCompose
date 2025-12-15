@@ -1,4 +1,6 @@
 .DS_Store
 .env
 /jmx_prometheus_javaagent.jar*
+export/
+!export/.keep
 

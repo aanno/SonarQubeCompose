@@ -1,6 +1,8 @@
 services:
   sonarqube:
-    image: docker.io/library/sonarqube:25.7.0.110598-community
+    # official image
+    # image: docker.io/library/sonarqube:25.7.0.110598-community
+    image: docker.io/mc1arke/sonarqube-with-community-branch-plugin:25.9.0.112764-community
     restart: unless-stopped
     ports:
       # SonarQube UI
@@ -19,9 +21,12 @@ services:
       - ./jmx_prometheus_javaagent.jar:/opt/sonarqube/jmx_prometheus_javaagent.jar:z,ro
       - ./jmx-prometheus-config.yml:/opt/sonarqube/jmx-prometheus-config.yml:z,ro
       - sonarqube_data:/opt/sonarqube/data
+      # must be commended out for mc1arke/sonarqube-with-community-branch-plugin
+      # until you have copied the jar /opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-*.jar
       - sonarqube_extensions:/opt/sonarqube/extensions
       - sonarqube_logs:/opt/sonarqube/logs
       - sonarqube_temp:/opt/sonarqube/temp
+      - ./export:/export:z
     networks:
       - sonarqube
   pg_sonar:
@@ -37,6 +42,7 @@ services:
       retries: 5
     volumes:
       - pg_sonar:/var/lib/postgresql
+      - ./export:/export:z
     networks:
       - sonarqube
   # level=WARN source=main.go:85 msg="Error loading config" err="error opening config file \"postgres_exporter.yml\": open postgres_exporter.yml: no such file or directory"
@@ -74,6 +80,7 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:z,ro
       - prometheus:/prometheus
+      - ./export:/export:z
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --storage.tsdb.path=/prometheus
@@ -97,6 +104,7 @@ services:
       - .env
     volumes:
       - grafana:/var/lib/grafana
+      - ./export:/export:z
     ports:
       # gaeko-ui runs on 3000
       - "3010:3000"
@@ -123,6 +131,7 @@ services:
       # - $PWD/site:/srv:z
       - caddy_data:/data
       - caddy_config:/config
+      - ./export:/export:z
 
 
 # echo "sonarqube_data sonarqube_extensions sonarqube_logs sonarqube_temp pg_sonar_config pg_sonar_data es_sonar_data grafana prometheus" | xargs -n 1 podman volume create

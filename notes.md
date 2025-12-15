@@ -95,3 +95,28 @@ Commercial but interesting:
 
 * https://rules.sonarsource.com/
 * [custom rules](https://docs.sonarsource.com/sonarqube-server/extension-guide/adding-coding-rules)
+
+## Sonarqube Upgrade
+
+The database must be manually upgraded. Please backup the database and browse /setup. For more information: 
+
+* https://docs.sonarsource.com/sonarqube-community-build/server-upgrade-and-maintenance/upgrade/upgrade-the-server/roadmap
+
+## Extensions
+
+### mc1arke/sonarqube-with-community-branch-plugin
+
+This extension will release you from many restriction of sonarqube CE. Hence it is recommended. However, you loose
+
+* sonarqube community support
+* the ability to use another java agent, i.e. exporting JMX to prometheus will become hard to impossible
+
+If you want other extensions as well it is suggested to copy the community branch extension to the extension volume
+
+Example:<br/>
+
+With docker image docker.io/mc1arke/sonarqube-with-community-branch-plugin:25.9.0.112764-community:
+
+* PWD is `/opt/sonarqube`
+* extensions folder is `./extensions`
+* path to jar: `/opt/sonarqube/extensions/plugins/sonarqube-community-branch-plugin-25.9.0.jar`
