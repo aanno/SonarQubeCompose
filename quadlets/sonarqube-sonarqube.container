@@ -7,7 +7,11 @@ HostName=sonarqube
 EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env
 Image=docker.io/mc1arke/sonarqube-with-community-branch-plugin:25.9.0.112764-community
 Network=sonarqube
-Pod=sonarqube.pod
+
+# Pod=sonarqube.pod
+PublishPort=9000:9000
+PublishPort=9005:9005
+
 Ulimit=nofile=65536:65536
 Volume=/home/tpasch/scm/aanno/github/SonarQubeCompose/jmx_prometheus_javaagent.jar:/opt/sonarqube/jmx_prometheus_javaagent.jar:ro,z
 Volume=/home/tpasch/scm/aanno/github/SonarQubeCompose/jmx-prometheus-config.yml:/opt/sonarqube/jmx-prometheus-config.yml:ro,z

@@ -1,15 +1,20 @@
 [Container]
 HostName=pg_sonar
 EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env
-# HealthCmd=pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+HealthCmd=pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
 HealthInterval=10s
 HealthRetries=5
 HealthTimeout=5s
 Image=docker.io/library/postgres:18
 Network=sonarqube
-Pod=sonarqube.pod
+
+# Pod=sonarqube.pod
+# no PublishPort
+
 Volume=pg_sonar:/var/lib/postgresql
 Volume=/home/tpasch/scm/aanno/github/SonarQubeCompose/export:/export:z
 
 [Service]
-Restart=always
+# Restart=always
+Restart=no
+RestartSec=3

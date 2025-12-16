@@ -3,7 +3,12 @@ HostName=caddy
 AddCapability=NET_ADMIN
 EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env
 Image=docker.io/library/caddy:2.10
-Pod=sonarqube.pod
+
+# Pod=sonarqube.pod
+PublishPort=80:80
+PublishPort=443:443
+PublishPort=443:443/udp
+
 Volume=/home/tpasch/scm/aanno/github/SonarQubeCompose/caddy:/etc/caddy:z
 Volume=caddy_data:/data
 Volume=caddy_config:/config
