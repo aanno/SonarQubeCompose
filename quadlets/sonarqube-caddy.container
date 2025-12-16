@@ -1,4 +1,5 @@
 [Container]
+HostName=caddy
 AddCapability=NET_ADMIN
 EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env
 Image=docker.io/library/caddy:2.10

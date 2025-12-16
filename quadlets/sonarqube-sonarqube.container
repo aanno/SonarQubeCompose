@@ -3,6 +3,7 @@ Requires=sonarqube-pg_sonar.service
 After=sonarqube-pg_sonar.service
 
 [Container]
+HostName=sonarqube
 EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env
 Image=docker.io/mc1arke/sonarqube-with-community-branch-plugin:25.9.0.112764-community
 Network=sonarqube

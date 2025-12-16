@@ -3,6 +3,7 @@ Requires=sonarqube-pg_sonar.service
 After=sonarqube-pg_sonar.service
 
 [Container]
+HostName=pg_sonar_exporter
 Environment=DATA_SOURCE_NAME=postgresql://:@:5432/?sslmode=disable
 EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env
 Image=quay.io/prometheuscommunity/postgres-exporter:latest

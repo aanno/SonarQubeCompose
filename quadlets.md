@@ -38,8 +38,16 @@ sonarqube-sonarqube.service         generated -
 ### Known issues
 
 * Podlet --pod with name: sonarqube adds prefix to systemd units but not internal Requires/After. Known issue, manual fix required.​
-  Example: pg_sonar.service -> sonarqube-pg_sonar.service
-* Hard links will be destroyed by daemon-reload, use scripts/compose-to-quadlet.sh to reinstall
+  + Solution: Rename pg_sonar.service -> sonarqube-pg_sonar.service
+    in Requires: After: and others
+* Hard links will be destroyed by daemon-reload
+  + Solution: Use scripts/compose-to-quadlet.sh to reinstall
+* Host names will change, e.g. from caddy to systemd-sonarqube-caddy.
+  + Solution use: Hostname=caddy in *.container
+* Health check (in HealthCmd=) does not have the required environment variable
+  + Solution: HealthCmd=pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+  + Solution: Comment out HealthCmd
+
 ```sh
 ``
 

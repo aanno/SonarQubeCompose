@@ -3,6 +3,7 @@ Requires=sonarqube-prometheus.service
 After=sonarqube-prometheus.service
 
 [Container]
+HostName=grafana
 EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env
 Image=docker.io/grafana/grafana-oss:latest
 Network=sonarqube
