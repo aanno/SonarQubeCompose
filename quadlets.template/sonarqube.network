@@ -1,0 +1,5 @@
+[Network]
+# all NetworkName listed here must be created with: `podman network create <name>`
+NetworkName=sonarqube
+NetworkName=exporter
+NetworkName=pg_sonar

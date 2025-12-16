@@ -4,7 +4,7 @@ After=podman-exporter.service
 
 [Container]
 HostName=pg_sonar
-EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env
+EnvironmentFile=$HOME/.config/SonarQubeCompose/.env
 HealthCmd=pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
 HealthInterval=10s
 HealthRetries=5
@@ -16,7 +16,7 @@ Network=pg_sonar
 # no PublishPort
 
 Volume=pg_sonar:/var/lib/postgresql
-Volume=/home/tpasch/scm/aanno/github/SonarQubeCompose/export:/export:z
+Volume=$GIT_ROOT/export:/export:z
 
 [Service]
 Restart=always

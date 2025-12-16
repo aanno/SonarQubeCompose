@@ -9,13 +9,14 @@
 #   yq (https://github.com/mikefarah/yq/) version v4.50.1
 
 set -euo pipefail
-. .env
 
-GIT_ROOT=`git rev-parse --show-toplevel`
-NAME=$(yq '.name' docker-compose.yml)
-TARGET_DIR=~/.config/containers/systemd
+export GIT_ROOT=`git rev-parse --show-toplevel`
 
 pushd $GIT_ROOT
+
+source .env
+NAME=$(yq '.name' docker-compose.yml)
+TARGET_DIR=~/.config/containers/systemd
 
 # ensure output directory
 mkdir -p $TARGET_DIR | true
@@ -29,6 +30,12 @@ systemctl --user reset-failed sonarqube-pg_sonar.service || true
 systemctl --user reset-failed sonarqube-pod.service || true
 systemctl --user reset-failed sonarqube-prometheus.service || true
 systemctl --user reset-failed sonarqube-sonarqube.service || true
+
+for i in quadlets.template/*; do
+  BASE=$(basename $i)
+  rm quadlets/$BASE || true
+  envsubst '$GIT_ROOT $HOME' <$i >quadlets/$BASE
+done
 
 for i in quadlets/*; do
   BASE=$(basename $i)

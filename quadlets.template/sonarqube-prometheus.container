@@ -12,9 +12,9 @@ Network=exporter
 # Pod=sonarqube.pod
 PublishPort=9099:9099
 
-Volume=/home/tpasch/scm/aanno/github/SonarQubeCompose/prometheus.yml:/etc/prometheus/prometheus.yml:ro,z
+Volume=$GIT_ROOT/prometheus.yml:/etc/prometheus/prometheus.yml:ro,z
 Volume=prometheus:/prometheus
-Volume=/home/tpasch/scm/aanno/github/SonarQubeCompose/export:/export:z
+Volume=$GIT_ROOT/export:/export:z
 
 [Service]
 Restart=always

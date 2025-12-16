@@ -8,7 +8,7 @@ After=sonarqube-prometheus.service
 
 [Container]
 HostName=grafana
-EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env
+EnvironmentFile=$HOME/.config/SonarQubeCompose/.env
 Image=docker.io/grafana/grafana-oss:latest
 Network=exporter
 
@@ -16,7 +16,7 @@ Network=exporter
 PublishPort=3010:3010
 
 Volume=grafana:/var/lib/grafana
-Volume=/home/tpasch/scm/aanno/github/SonarQubeCompose/export:/export:z
+Volume=$GIT_ROOT/export:/export:z
 
 [Service]
 Restart=always
