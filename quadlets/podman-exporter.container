@@ -1,6 +1,6 @@
 [Unit]
-Requires=node-exporter.service sonarqube-network.service
-After=node-exporter.service sonarqube-network.service
+Requires=node-exporter.service sonarqube-network.service podman.socket
+After=node-exporter.service sonarqube-network.service podman.socket
 
 [Container]
 ContainerName=podman-exporter

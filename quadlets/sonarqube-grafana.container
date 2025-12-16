@@ -1,3 +1,7 @@
+# This is the same a 'enable' but for transient, generated services
+[Install]
+WantedBy=default.target
+
 [Unit]
 Requires=sonarqube-prometheus.service
 After=sonarqube-prometheus.service
