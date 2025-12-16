@@ -32,7 +32,7 @@ systemctl --user reset-failed sonarqube-sonarqube.service || true
 
 for i in quadlets/*; do
   BASE=$(basename $i)
-  rm $TARGET_DIR/$BASE
+  rm $TARGET_DIR/$BASE || true
   ln -f $i $TARGET_DIR/$BASE
 done
 

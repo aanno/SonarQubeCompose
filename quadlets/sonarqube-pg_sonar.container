@@ -1,3 +1,7 @@
+[Unit]
+Requires=podman-exporter.service
+After=podman-exporter.service
+
 [Container]
 HostName=pg_sonar
 EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env

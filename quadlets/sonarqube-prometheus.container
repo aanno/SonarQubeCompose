@@ -1,6 +1,6 @@
 [Unit]
-Requires=sonarqube-sonarqube.service sonarqube-pg_sonar_exporter.service
-After=sonarqube-sonarqube.service sonarqube-pg_sonar_exporter.service
+Requires=sonarqube-sonarqube.service sonarqube-pg_sonar_exporter.service node-exporter.service podman-exporter.service
+After=sonarqube-sonarqube.service sonarqube-pg_sonar_exporter.service node-exporter.service podman-exporter.service
 
 [Container]
 HostName=prometheus

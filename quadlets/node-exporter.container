@@ -1,0 +1,14 @@
+[Unit]
+Requires=sonarqube-network.service
+After=sonarqube-network.service
+
+[Container]
+ContainerName=node-exporter
+Exec='--path.rootfs=/host'
+Image=quay.io/prometheus/node-exporter:latest
+Network=host
+PodmanArgs=--pid host
+Volume=/:/host:ro,rslave
+
+[Service]
+Restart=always
