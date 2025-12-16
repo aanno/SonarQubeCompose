@@ -1,5 +1,5 @@
 # needed for podlet convertion
-name: sonarqubecompose
+name: sonarqube
 
 services:
   sonarqube:

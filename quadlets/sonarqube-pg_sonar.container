@@ -1,0 +1,14 @@
+[Container]
+EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env
+HealthCmd=pg_isready -d  -U 
+HealthInterval=10s
+HealthRetries=5
+HealthTimeout=5s
+Image=docker.io/library/postgres:18
+Network=sonarqube
+Pod=sonarqube.pod
+Volume=pg_sonar:/var/lib/postgresql
+Volume=/home/tpasch/scm/aanno/github/SonarQubeCompose/export:/export:z
+
+[Service]
+Restart=always

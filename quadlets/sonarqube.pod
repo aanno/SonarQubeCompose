@@ -1,0 +1,12 @@
+[Pod]
+PublishPort=9000:9000
+PublishPort=9005:9005
+PublishPort=9187:9187
+PublishPort=9099:9099
+PublishPort=3010:3010
+PublishPort=80:80
+PublishPort=443:443
+PublishPort=443:443/udp
+PublishPort=9001:9001
+PublishPort=9002:9002
+PublishPort=9002:9002/udp

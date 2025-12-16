@@ -1,0 +1,12 @@
+[Container]
+AddCapability=NET_ADMIN
+EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env
+Image=docker.io/library/caddy:2.10
+Pod=sonarqube.pod
+Volume=/home/tpasch/scm/aanno/github/SonarQubeCompose/caddy:/etc/caddy:z
+Volume=caddy_data:/data
+Volume=caddy_config:/config
+Volume=/home/tpasch/scm/aanno/github/SonarQubeCompose/export:/export:z
+
+[Service]
+Restart=always

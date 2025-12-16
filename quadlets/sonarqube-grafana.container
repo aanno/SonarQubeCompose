@@ -1,0 +1,14 @@
+[Unit]
+Requires=prometheus.service
+After=prometheus.service
+
+[Container]
+EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env
+Image=docker.io/grafana/grafana-oss:latest
+Network=sonarqube
+Pod=sonarqube.pod
+Volume=grafana:/var/lib/grafana
+Volume=/home/tpasch/scm/aanno/github/SonarQubeCompose/export:/export:z
+
+[Service]
+Restart=always

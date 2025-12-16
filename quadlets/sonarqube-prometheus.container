@@ -1,0 +1,15 @@
+[Unit]
+Requires=sonarqube.service pg_sonar_exporter.service
+After=sonarqube.service pg_sonar_exporter.service
+
+[Container]
+Exec='--config.file=/etc/prometheus/prometheus.yml' '--storage.tsdb.path=/prometheus' --web.enable-lifecycle --web.enable-admin-api '--web.listen-address=:9099'
+Image=quay.io/prometheus/prometheus:v3.8.0
+Network=sonarqube
+Pod=sonarqube.pod
+Volume=/home/tpasch/scm/aanno/github/SonarQubeCompose/prometheus.yml:/etc/prometheus/prometheus.yml:ro,z
+Volume=prometheus:/prometheus
+Volume=/home/tpasch/scm/aanno/github/SonarQubeCompose/export:/export:z
+
+[Service]
+Restart=always
