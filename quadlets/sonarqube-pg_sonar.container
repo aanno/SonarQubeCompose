@@ -10,7 +10,7 @@ HealthInterval=10s
 HealthRetries=5
 HealthTimeout=5s
 Image=docker.io/library/postgres:18
-Network=sonarqube
+Network=pg_sonar
 
 # Pod=sonarqube.pod
 # no PublishPort

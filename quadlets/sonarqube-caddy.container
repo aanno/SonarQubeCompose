@@ -1,9 +1,14 @@
+# This is the same a 'enable' but for transient, generated services
+[Install]
+WantedBy=default.target
+
 [Container]
 HostName=caddy
 AddCapability=NET_ADMIN
 EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env
 Image=docker.io/library/caddy:2.10
 Network=sonarqube
+Network=exporter
 
 # Pod=sonarqube.pod
 PublishPort=80:80

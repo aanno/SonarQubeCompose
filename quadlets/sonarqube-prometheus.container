@@ -7,6 +7,7 @@ HostName=prometheus
 Exec='--config.file=/etc/prometheus/prometheus.yml' '--storage.tsdb.path=/prometheus' --web.enable-lifecycle --web.enable-admin-api '--web.listen-address=:9099'
 Image=quay.io/prometheus/prometheus:v3.8.0
 Network=sonarqube
+Network=exporter
 
 # Pod=sonarqube.pod
 PublishPort=9099:9099

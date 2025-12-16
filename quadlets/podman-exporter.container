@@ -6,7 +6,7 @@ After=node-exporter.service sonarqube-network.service podman.socket
 ContainerName=podman-exporter
 Environment=CONTAINER_HOST=unix:///run/podman/podman.sock
 Image=quay.io/navidys/prometheus-podman-exporter:latest
-Network=sonarqube
+Network=exporter
 PublishPort=9882:9882
 SecurityLabelDisable=true
 UserNS=keep-id:uid=65534

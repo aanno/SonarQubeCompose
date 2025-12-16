@@ -7,7 +7,8 @@ HostName=pg_sonar_exporter
 EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env
 Environment=DATA_SOURCE_NAME=postgresql://:@:5432/?sslmode=disable
 Image=quay.io/prometheuscommunity/postgres-exporter:latest
-Network=sonarqube
+Network=pg_sonar
+Network=exporter
 
 # Pod=sonarqube.pod
 PublishPort=9187:9187

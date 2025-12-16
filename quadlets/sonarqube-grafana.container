@@ -10,7 +10,7 @@ After=sonarqube-prometheus.service
 HostName=grafana
 EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env
 Image=docker.io/grafana/grafana-oss:latest
-Network=sonarqube
+Network=exporter
 
 # Pod=sonarqube.pod
 PublishPort=3010:3010
