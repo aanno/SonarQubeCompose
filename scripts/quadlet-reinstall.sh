@@ -20,16 +20,10 @@ pushd $GIT_ROOT
 # ensure output directory
 mkdir -p $TARGET_DIR | true
 
-envsubst < $1 \
-  | yq '(.volumes[] | select(has("external")) | .external) = false |
-     (.networks[] | select(has("external")) | .external) = false' \
-  | podlet -u -a --overwrite compose --pod -
-
-# -p 4.8 podman version 4.8: RHEL 9.4 has podman 4.9 but then --pod could NOT be given
-
-for i in $TARGET_DIR/$NAME-* $TARGET_DIR/$NAME.*; do
+for i in quadlets/*; do
   BASE=$(basename $i)
-  ln -f $i quadlets/$BASE
+  rm $TARGET_DIR/$BASE
+  ln -f $i $TARGET_DIR/$BASE
 done
 
 popd

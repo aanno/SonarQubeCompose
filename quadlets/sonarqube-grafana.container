@@ -1,6 +1,6 @@
 [Unit]
-Requires=prometheus.service
-After=prometheus.service
+Requires=sonarqube-prometheus.service
+After=sonarqube-prometheus.service
 
 [Container]
 EnvironmentFile=/home/tpasch/scm/aanno/github/SonarQubeCompose/.env

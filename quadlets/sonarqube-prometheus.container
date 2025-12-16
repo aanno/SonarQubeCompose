@@ -1,6 +1,6 @@
 [Unit]
-Requires=sonarqube.service pg_sonar_exporter.service
-After=sonarqube.service pg_sonar_exporter.service
+Requires=sonarqube-sonarqube.service sonarqube-pg_sonar_exporter.service
+After=sonarqube-sonarqube.service sonarqube-pg_sonar_exporter.service
 
 [Container]
 Exec='--config.file=/etc/prometheus/prometheus.yml' '--storage.tsdb.path=/prometheus' --web.enable-lifecycle --web.enable-admin-api '--web.listen-address=:9099'

@@ -1,6 +1,6 @@
 [Unit]
-Requires=pg_sonar.service
-After=pg_sonar.service
+Requires=sonarqube-pg_sonar.service
+After=sonarqube-pg_sonar.service
 
 [Container]
 Environment=DATA_SOURCE_NAME=postgresql://:@:5432/?sslmode=disable
