@@ -4,7 +4,9 @@
 #
 # * go install github.com/mikefarah/yq/v4@latest
 #   from https://github.com/mikefarah/yq
+#   podlet 0.3.0
 # * cargo install podlet
+#   yq (https://github.com/mikefarah/yq/) version v4.50.1
 
 set -euo pipefail
 . .env
@@ -31,3 +33,5 @@ for i in $TARGET_DIR/$NAME-* $TARGET_DIR/$NAME.*; do
 done
 
 popd
+
+systemctl --user daemon-reload
