@@ -44,13 +44,14 @@ sonarqube-sonarqube.service         generated -
   + Solution: Use scripts/compose-to-quadlet.sh to reinstall
 * Host names will change, e.g. from caddy to systemd-sonarqube-caddy.
   + Solution use: HostName=caddy in *.container (but only if you don't use Pod=)
-  + Well, you can't use HostName at if you use Pod=
+  + Well, you can't use HostName at all if you use Pod=
   + If you don't use Pod=, you need PublishPort
 * Health check (in HealthCmd=) does not have the required environment variable
   + Solution: HealthCmd=pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
   + Solution: Comment out HealthCmd
 * All used required environment variable will disappear, see Health check above
 * Double check if EnvironmentFile come BEFORE Environment
+  + You probably want EnvironmentFile as FIRST line in section
 
 ```sh
 ``

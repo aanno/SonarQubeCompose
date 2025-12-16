@@ -5,7 +5,8 @@ scrape_configs:
   - job_name: "sonarqube-jvm-over-proxy"
     metrics_path: /api/monitoring/metrics
     static_configs:
-      - targets: ["host.docker.internal:9001"]
+      # - targets: ["host.docker.internal:9001"]
+      - targets: ["caddy:9001"]
   - job_name: "sonarqube-jvm"
     metrics_path: /api/monitoring/metrics
     http_headers:

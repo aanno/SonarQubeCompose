@@ -15,6 +15,6 @@ Volume=pg_sonar:/var/lib/postgresql
 Volume=/home/tpasch/scm/aanno/github/SonarQubeCompose/export:/export:z
 
 [Service]
-# Restart=always
-Restart=no
-RestartSec=3
+Restart=always
+# Restart=no
+# RestartSec=3
