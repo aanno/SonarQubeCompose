@@ -19,6 +19,8 @@ In addition:
   # let podman rootless use port 80+
   net.ipv4.ip_unprivileged_port_start=80
   ```
+* you need `sysctl -w vm.max_map_count=262144` for running sonarqube
+  and should probably make this permanent
 
 ### Adjust rootless container storage path (IMPORTANT!)
 

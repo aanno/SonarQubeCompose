@@ -10,6 +10,7 @@ pushd $GIT_ROOT
 
   chmod go+x scripts/cb-plugin-install.sh
   podman run --rm \
+      --env-file .env \
       -v $PWD/jmx_prometheus_javaagent.jar:/opt/sonarqube/jmx_prometheus_javaagent.jar:z,ro \
       -v $PWD/jmx-prometheus-config.yml:/opt/sonarqube/jmx-prometheus-config.yml:z,ro \
       -v sonarqube_data:/opt/sonarqube/data \
