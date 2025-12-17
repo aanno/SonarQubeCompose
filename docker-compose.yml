@@ -32,12 +32,15 @@ services:
       - $PWD/export:/export:z
     networks:
       - sonarqube
+      - pg_sonar
   pg_sonar:
     # image: postgres:17.5
     image: docker.io/library/postgres:18
     restart: unless-stopped
     env_file:
       - .env
+    environment:
+      - POSTGRES_PASSWORD=$SONAR_JDBC_PASSWORD
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d ${SONAR_POSTGRES_DB} -U ${SONAR_JDBC_USERNAME}" ]
       interval: 10s
@@ -47,7 +50,7 @@ services:
       - pg_sonar:/var/lib/postgresql
       - $PWD/export:/export:z
     networks:
-      - sonarqube
+      - pg_sonar
   # level=WARN source=main.go:85 msg="Error loading config" err="error opening config file \"postgres_exporter.yml\": open postgres_exporter.yml: no such file or directory"
   pg_sonar_exporter:
     image: quay.io/prometheuscommunity/postgres-exporter:latest
@@ -59,6 +62,7 @@ services:
       DATA_SOURCE_NAME: "postgresql://${SONAR_JDBC_USERNAME}:${SONAR_JDBC_PASSWORD}@${SONAR_POSTGRES_HOST}:5432/${SONAR_POSTGRES_DB}?sslmode=disable"
     networks:
       - sonarqube
+      - pg_sonar
     depends_on:
       - pg_sonar
     ports:
@@ -87,6 +91,7 @@ services:
       - "9099:9099"
     networks:
       - sonarqube
+      - exporter
     depends_on:
       - sonarqube
       - pg_sonar_exporter
@@ -103,7 +108,7 @@ services:
       # GF_SERVER_HTTP_PORT
       - "3010:3010"
     networks:
-      - sonarqube
+      - exporter
     depends_on:
       - prometheus
   caddy:
@@ -126,6 +131,9 @@ services:
       - caddy_data:/data
       - caddy_config:/config
       - $PWD/export:/export:z
+    networks:
+      - sonarqube
+      - exporter
 
 
 # echo "sonarqube_data sonarqube_extensions sonarqube_logs sonarqube_temp pg_sonar_config pg_sonar_data es_sonar_data grafana prometheus caddy_data caddy_config" | xargs -n 1 podman volume create

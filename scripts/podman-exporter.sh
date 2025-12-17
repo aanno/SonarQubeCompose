@@ -24,7 +24,7 @@ fi
 # systemctl start --user podman.socket
 podman run --name "$NAME" -d \
   --restart unless-stopped \
-  --network sonarqube \
+  --network exporter \
   -e CONTAINER_HOST=unix:///run/podman/podman.sock \
   -v $DOCKER_SOCKET:/run/podman/podman.sock \
   -p 9882:9882 \

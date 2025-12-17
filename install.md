@@ -12,6 +12,14 @@ dnf install podman podman-compose yq git
 loginctl enable-linger <user>
 ```
 
+In addition:
+
+* in `/etc/sysctl.d/` you need a file containing: <br/>
+  ```text
+  # let podman rootless use port 80+
+  net.ipv4.ip_unprivileged_port_start=80
+  ```
+
 ## Preparation (user)
 
 ```sh
