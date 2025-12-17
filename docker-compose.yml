@@ -40,7 +40,9 @@ services:
     env_file:
       - .env
     environment:
+      - POSTGRES_USER=$SONAR_JDBC_USERNAME
       - POSTGRES_PASSWORD=$SONAR_JDBC_PASSWORD
+      - POSTGRES_DB=$SONAR_POSTGRES_DB
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -d ${SONAR_POSTGRES_DB} -U ${SONAR_JDBC_USERNAME}" ]
       interval: 10s

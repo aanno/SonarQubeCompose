@@ -5,7 +5,9 @@ After=podman-exporter.service
 [Container]
 HostName=pg_sonar
 EnvironmentFile=$HOME/.config/SonarQubeCompose/.env
+Environment=POSTGRES_USER=$SONAR_JDBC_USERNAME
 Environment=POSTGRES_PASSWORD=$SONAR_JDBC_PASSWORD
+Environment=POSTGRES_DB=$SONAR_POSTGRES_DB
 # Health is no problem with podman 5.7.x but on RHEL 9.4 quoting is delicate
 # Hence commented out (tp)
 # HealthCmd=pg_isready -U "$SONAR_JDBC_USERNAME" -d "$SONAR_POSTGRES_DB"
