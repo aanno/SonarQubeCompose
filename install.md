@@ -20,7 +20,7 @@ In addition:
   net.ipv4.ip_unprivileged_port_start=80
   ```
 
-### Adjust rootless storage path (IMPORTANT!)
+### Adjust rootless container storage path (IMPORTANT!)
 
 This is NEED because the default storage location for rootless containers
 `/home/<user>/.local/share/containers/storage` will get very large soon.
@@ -46,7 +46,7 @@ rm -rf /home/pascht/.local/share/containers/storage
 * Whenever graphRoot of a rootless user is changed to a different path, the SELinux labels for this location should also be changed appropriately
 * Following commands needs to be run to change the labels
 
-```text
+```sh
 semanage fcontext -a -t container_var_lib_t 'graphRootDirectory(/.*)?'
 restorecon -Rv graphRootDirectory
 ```

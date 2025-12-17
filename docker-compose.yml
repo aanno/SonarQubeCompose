@@ -161,3 +161,7 @@ volumes:
 networks:
   sonarqube:
     external: true
+  exporter:
+    external: true
+  pg_sonar:
+    external: true
