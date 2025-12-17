@@ -103,6 +103,8 @@ Started sonarqube will survive reboots. To stop see section 'Stopping sonarqube'
 ## Stopping sonarqube
 
 ```sh
+systemctl --user stop node-exporter.service
+systemctl --user stop sonarqube-caddy.service
 ```
 
 ## Port overview
@@ -124,6 +126,33 @@ systemctl --user status podman-exporter.service
 # to extract the actual command that was run (and has failed)
 
 journalctl --user -xeu podman-exporter.service
+```
+
+### Debug on remote host with firewall in place
+
+```sh
+ssh -L 80:localhost:80 -L 443:localhost:443 -L 3010:localhost:3010 -L 9000:localhost:9000 -L 9099:localhost:9099 <user@host>
+```
+
+## Firewall
+
+```sh
+sudo firewall-cmd --zone=public --add-service=http
+sudo firewall-cmd --zone=public --add-service=https
+sudo firewall-cmd --permanent --zone=public --add-service=http
+sudo firewall-cmd --permanent --zone=public --add-service=https
+
+sudo firewall-cmd --reload
+
+sudo firewall-cmd --zone=public --add-port=3010/tcp
+sudo firewall-cmd --zone=public --add-port=9000/tcp
+sudo firewall-cmd --zone=public --add-port=9099/tcp
+
+sudo firewall-cmd --permanent --zone=public --add-port=3010/tcp
+sudo firewall-cmd --permanent --zone=public --add-port=9000/tcp
+sudo firewall-cmd --permanent --zone=public --add-port=9099/tcp
+
+sudo firewall-cmd --reload
 ```
 
 ```sh
