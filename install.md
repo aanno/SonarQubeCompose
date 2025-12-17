@@ -77,6 +77,9 @@ cp env.example .env
 # IMPORTANT: review and edit .env to your needs
 # nano .env
 
+# download some additional file/jar we need
+scripts/initial-download.sh
+
 mkdir -p ~/.config/containers/systemd/
 mkdir -p ~/.config/SonarQubeCompose/
 ln $PWD/.env ~/.config/SonarQubeCompose/
@@ -88,6 +91,9 @@ podman network create exporter
 podman network create pg_sonar
 
 echo "sonarqube_data sonarqube_extensions sonarqube_logs sonarqube_temp pg_sonar_config pg_sonar_data es_sonar_data grafana prometheus caddy_data caddy_config" | xargs -n 1 podman volume create
+
+# prepare container/volume of sonarqube with branch community plugin
+scripts/cb-container-prepare.sh
 ```
 
 ## Actual installation
@@ -102,6 +108,32 @@ systemctl --user start sonarqube-caddy.service
 
 Started sonarqube will survive reboots. To stop see section 'Stopping sonarqube' below.
 
+## Post install
+
+If you got no official DNS entry you need the following in `/etc/hosts`.
+For this example, I assume that you set `SUBDOMAIN=my` in `.env`.
+
+```text
+127.0.0.1 sonarqube.my
+127.0.0.1 grafana.my
+127.0.0.1 prometheus.my
+```
+
+Maybe you have to replace 127.0.0.1 with the IP number.
+
+### URL overview
+
+* [sonarqube](https://sonarqube.my) with branch community plugin
+* [prometheus](https://prometheus.my)
+* [grafana](https://grafana.my)
+
+### Passwords
+
+* sonarqube: default password is admin/admin. 
+  **Change as soon as possible.**
+* prometheus: currently no password set
+* grafana: Set via GF_SECURITY_ADMIN_USER and GF_SECURITY_ADMIN_PASSWORD in `.env`
+
 ## Stopping sonarqube
 
 ```sh
@@ -110,8 +142,6 @@ systemctl --user stop sonarqube-caddy.service
 ```
 
 ## Port overview
-
-## URL overview
 
 ## Troubleshooting
 
