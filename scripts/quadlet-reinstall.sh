@@ -8,7 +8,9 @@
 
 set -euo pipefail
 
+# export ALL that is needed in envsubst
 export GIT_ROOT=`git rev-parse --show-toplevel`
+export HOME USERID
 
 pushd $GIT_ROOT
 

@@ -128,7 +128,7 @@ services:
       - $PWD/export:/export:z
 
 
-# echo "sonarqube_data sonarqube_extensions sonarqube_logs sonarqube_temp pg_sonar_config pg_sonar_data es_sonar_data grafana prometheus" | xargs -n 1 podman volume create
+# echo "sonarqube_data sonarqube_extensions sonarqube_logs sonarqube_temp pg_sonar_config pg_sonar_data es_sonar_data grafana prometheus caddy_data caddy_config" | xargs -n 1 podman volume create
 volumes:
   sonarqube_data:
     external: true
