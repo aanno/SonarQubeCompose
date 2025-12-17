@@ -24,7 +24,7 @@ In addition:
 
 ### Adjust rootless container storage path (IMPORTANT!)
 
-This is NEED because the default storage location for rootless containers
+This is NEEDED _on RHEL servers_ because the default storage location for rootless containers
 `/home/<user>/.local/share/containers/storage` will get very large soon.
 
 In `/etc/containers/storage.conf` change or add the following line:

@@ -11,6 +11,7 @@ scrape_configs:
     metrics_path: /api/monitoring/metrics
     http_headers:
       X-Sonar-Passcode:
+        # TODO: put pc from .env here
         values: ['my-secret-passcode']
     static_configs:
       - targets: ["sonarqube:9000"]

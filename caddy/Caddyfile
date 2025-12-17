@@ -25,34 +25,34 @@ http://{$SONAR_METRICS_HOST}:{$CADDY_HTTP_PORT} {
 }
 
 # HTTP virtual hosts (port 80) → redirect to HTTPS
-sonarqube.my:80 {
+sonarqube.{$SUBDOMAIN}:80 {
 	redir https://{host}{uri}
 }
 
-grafana.my:80 {
+grafana.{$SUBDOMAIN}:80 {
 	redir https://{host}{uri}
 }
 
-prometheus.my:80 {
+prometheus.{$SUBDOMAIN}:80 {
 	redir https://{host}{uri}
 }
 
 # HTTPS virtual hosts (port 443) with on‑demand internal certs
-sonarqube.my:443 {
+sonarqube.{$SUBDOMAIN}:443 {
 	tls internal {
 		on_demand
 	}
 	reverse_proxy http://sonarqube:9000
 }
 
-grafana.my:443 {
+grafana.{$SUBDOMAIN}:443 {
 	tls internal {
 		on_demand
 	}
 	reverse_proxy http://grafana:{$GF_SERVER_HTTP_PORT}
 }
 
-prometheus.my:443 {
+prometheus.{$SUBDOMAIN}:443 {
 	tls internal {
 		on_demand
 	}
