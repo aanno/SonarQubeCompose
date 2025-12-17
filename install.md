@@ -39,8 +39,17 @@ mkdir -p /mnt/data/podman-rootless/<user>
 # adjust the owner, example
 chown -R pascht:pascht /mnt/data/podman-rootless/pascht
 
+# IMPORTANT: adjust selinux labels
+chcon -Rt container_file_t /mnt/data/podman-rootless/
+
 # maybe you need to delete the (already too large) old location (example):
 rm -rf /home/pascht/.local/share/containers/storage
+```
+
+Maybe you need to reinstall a selinux package with:
+
+```sh
+dnf reinstall container-selinux
 ```
 
 * Whenever graphRoot of a rootless user is changed to a different path, the SELinux labels for this location should also be changed appropriately
@@ -55,6 +64,7 @@ where graphRootDirectory is the new location specified in storage.conf
 
 Reference: <br/>
 * https://access.redhat.com/solutions/7007159
+* https://github.com/containers/podman/issues/20314
 
 ## Preparation (user)
 
