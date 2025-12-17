@@ -6,10 +6,12 @@ After=podman-exporter.service
 HostName=pg_sonar
 EnvironmentFile=$HOME/.config/SonarQubeCompose/.env
 Environment=POSTGRES_PASSWORD=$SONAR_JDBC_PASSWORD
-HealthCmd=pg_isready -U "$SONAR_JDBC_USERNAME" -d "$SONAR_POSTGRES_DB"
-HealthInterval=10s
-HealthRetries=5
-HealthTimeout=5s
+# Health is no problem with podman 5.7.x but on RHEL 9.4 quoting is delicate
+# Hence commented out (tp)
+# HealthCmd=pg_isready -U "$SONAR_JDBC_USERNAME" -d "$SONAR_POSTGRES_DB"
+# HealthInterval=10s
+# HealthRetries=5
+# HealthTimeout=5s
 Image=docker.io/library/postgres:18
 Network=pg_sonar
 

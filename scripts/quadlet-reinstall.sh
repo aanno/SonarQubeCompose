@@ -9,12 +9,14 @@
 set -euo pipefail
 
 # export ALL that is needed in envsubst
+# this is need for a interpolation directly in *.container files
 export GIT_ROOT=`git rev-parse --show-toplevel`
-export HOME USERID
 
 pushd $GIT_ROOT
 
 source .env
+export HOME USERID SONAR_JDBC_PASSWORD SONAR_JDBC_USERNAME SONAR_POSTGRES_DB
+
 NAME=$(yq '.name' docker-compose.yml)
 TARGET_DIR=~/.config/containers/systemd
 
@@ -32,9 +34,13 @@ systemctl --user reset-failed sonarqube-prometheus.service || true
 systemctl --user reset-failed sonarqube-sonarqube.service || true
 
 for i in quadlets.template/*; do
+  # restrict access as there might be passwords in these files
+  chmod go-rwx $i
   BASE=$(basename $i)
   rm quadlets/$BASE || true
-  envsubst '$GIT_ROOT $HOME $USERID' <$i >quadlets/$BASE
+  envsubst '$GIT_ROOT $HOME $USERID $SONAR_JDBC_PASSWORD $SONAR_JDBC_USERNAME $SONAR_POSTGRES_DB' <$i >quadlets/$BASE
+  # restrict access as there might be passwords in these files
+  chmod go-rwx quadlets/$BASE
 done
 
 for i in quadlets/*; do
