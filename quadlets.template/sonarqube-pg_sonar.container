@@ -5,7 +5,7 @@ After=podman-exporter.service
 [Container]
 HostName=pg_sonar
 EnvironmentFile=$HOME/.config/SonarQubeCompose/.env
-HealthCmd=pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+HealthCmd=pg_isready -U "$SONAR_JDBC_USERNAME" -d "$SONAR_POSTGRES_DB"
 HealthInterval=10s
 HealthRetries=5
 HealthTimeout=5s

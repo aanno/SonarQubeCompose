@@ -47,7 +47,7 @@ sonarqube-sonarqube.service         generated -
   + Well, you can't use HostName at all if you use Pod=
   + If you don't use Pod=, you need PublishPort
 * Health check (in HealthCmd=) does not have the required environment variable
-  + Solution: HealthCmd=pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+  + Solution: HealthCmd=pg_isready -U "$SONAR_JDBC_USERNAME" -d "$SONAR_POSTGRES_DB"
   + Solution: Comment out HealthCmd
 * All used required environment variable will disappear, see Health check above
 * Double check if EnvironmentFile come BEFORE Environment
