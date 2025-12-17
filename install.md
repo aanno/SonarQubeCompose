@@ -115,6 +115,10 @@ systemctl --user stop sonarqube-caddy.service
 
 ## Troubleshooting
 
+### Gotchas
+
+* some special characters don't work well for passwords in `.env`: ?
+
 ### Debugging
 
 ```sh
@@ -134,6 +138,21 @@ journalctl --user -xeu podman-exporter.service
 
 ```sh
 ssh -L 80:localhost:80 -L 443:localhost:443 -L 3010:localhost:3010 -L 9000:localhost:9000 -L 9099:localhost:9099 <user@host>
+```
+
+### Test db connection and pw
+
+Use a running container with access to DB:
+
+```sh
+podman exec -it systemd-sonarqube-pg_sonar bash
+```
+
+Inside the container:
+
+```sh
+psql -U sonar postgresql://pg_sonar:5432/sonar
+Password for user sonar:
 ```
 
 ## Firewall
