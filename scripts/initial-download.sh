@@ -3,6 +3,7 @@
 . .env
 
 GIT_ROOT=`git rev-parse --show-toplevel`
+CB_VERSION=25.9.0
 
 pushd $GIT_ROOT
 
@@ -15,7 +16,10 @@ pushd $GIT_ROOT
     cat sum.sha256 | cut -d' ' -f 1 | tr -d $'\n' >jmx_prometheus_javaagent.jar.sha256
     echo " jmx_prometheus_javaagent.jar" >>jmx_prometheus_javaagent.jar.sha256
   fi
-
+  if [ ! -f sonarqube-community-branch-plugin-$CB_VERSION.jar ]; then
+    curl -L -o sonarqube-community-branch-plugin-$CB_VERSION.jar https://github.com/mc1arke/sonarqube-community-branch-plugin/releases/download/$CB_VERSION/sonarqube-community-branch-plugin-$CB_VERSION.jar
+  fi
+  cp sonarqube-community-branch-plugin-$CB_VERSION.jar export/ || true
 
 popd
 
