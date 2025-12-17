@@ -20,6 +20,42 @@ In addition:
   net.ipv4.ip_unprivileged_port_start=80
   ```
 
+### Adjust rootless storage path (IMPORTANT!)
+
+This is NEED because the default storage location for rootless containers
+`/home/<user>/.local/share/containers/storage` will get very large soon.
+
+In `/etc/containers/storage.conf` change or add the following line:
+
+```text
+rootless_storage_path = "/mnt/data/podman-rootless/$USER"
+```
+
+Also ensure that the path is available:
+
+```sh
+mkdir -p /mnt/data/podman-rootless
+mkdir -p /mnt/data/podman-rootless/<user>
+# adjust the owner, example
+chown -R pascht:pascht /mnt/data/podman-rootless/pascht
+
+# maybe you need to delete the (already too large) old location (example):
+rm -rf /home/pascht/.local/share/containers/storage
+```
+
+* Whenever graphRoot of a rootless user is changed to a different path, the SELinux labels for this location should also be changed appropriately
+* Following commands needs to be run to change the labels
+
+```text
+semanage fcontext -a -t container_var_lib_t 'graphRootDirectory(/.*)?'
+restorecon -Rv graphRootDirectory
+```
+
+where graphRootDirectory is the new location specified in storage.conf
+
+Reference: <br/>
+* https://access.redhat.com/solutions/7007159
+
 ## Preparation (user)
 
 ```sh
