@@ -119,6 +119,30 @@ systemctl --user stop sonarqube-caddy.service
 
 * some special characters don't work well for passwords in `.env`: ?
 
+### Healthy containers
+
+* systemd-sonarqube-sonarqube: <br/>
+  2025.12.17 13:35:50 INFO  app[][o.s.a.SchedulerImpl] SonarQube is operational
+* systemd-sonarqube-pg_sonar: <br/>
+  2025-12-17 13:34:27.979 UTC [1] LOG:  database system is ready to accept connections
+* node-exporter: <br/>
+  time=2025-12-17T13:34:25.805Z level=INFO source=tls_config.go:346 msg="Listening on" address=[::]:9100
+* podman-exporter: <br/>
+  time=2025-12-17T13:34:26.143Z level=INFO source=tls_config.go:346 msg="Listening on" address=[::]:9882
+* systemd-sonarqube-grafana: <br/>
+  logger=backgroundsvcs.managerAdapter t=2025-12-17T13:39:50.397616242Z level=info msg="All modules healthy"
+  logger=plugins.update.checker t=2025-12-17T13:39:50.428146422Z level=info msg="Update check succeeded" duration=31.164206ms
+  logger=grafana.update.checker t=2025-12-17T13:39:50.42896293Z level=info msg="Update check succeeded" duration=32.005171ms
+  logger=ngalert.state.manager t=2025-12-17T13:39:50.438198299Z level=info msg="State cache has been initialized" states=0 duration=42.079334ms
+  logger=ngalert.scheduler t=2025-12-17T13:39:50.438270498Z level=info msg="Starting scheduler" tickInterval=10s maxAttempts=3
+  logger=ngalert.scheduler t=2025-12-17T13:39:50.438330788Z level=info msg=starting component=ticker first_tick=2025-12-17T13:40:00Z
+* systemd-sonarqube-prometheus: <br/>
+  time=2025-12-17T13:39:56.401Z level=INFO source=head.go:1372 msg="WAL checkpoint complete" component=tsdb first=0 last=227 duration=59.678643ms
+* systemd-sonarqube-grafana
+  logger=infra.usagestats t=2025-12-17T13:41:07.401311949Z level=info msg="Usage stats are ready to report"
+* systemd-sonarqube-caddy: <br/>
+  {"level":"info","ts":1765979032.8203435,"msg":"serving initial configuration"}
+
 ### Debugging
 
 ```sh
