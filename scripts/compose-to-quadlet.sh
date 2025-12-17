@@ -7,6 +7,7 @@
 #   podlet 0.3.0
 # * cargo install podlet
 #   yq (https://github.com/mikefarah/yq/) version v4.50.1
+# * for RHEL 9.4 yq is available: dnf install yp
 
 set -euo pipefail
 . .env

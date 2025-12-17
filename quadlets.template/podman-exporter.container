@@ -10,7 +10,7 @@ Network=exporter
 PublishPort=9882:9882
 SecurityLabelDisable=true
 UserNS=keep-id:uid=65534
-Volume=/run/user/1000/podman/podman.sock:/run/podman/podman.sock
+Volume=/run/user/$USERID/podman/podman.sock:/run/podman/podman.sock
 
 [Service]
 Restart=always

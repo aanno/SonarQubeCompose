@@ -2,11 +2,9 @@
 
 # you need:
 #
-# * go install github.com/mikefarah/yq/v4@latest
-#   from https://github.com/mikefarah/yq
-#   podlet 0.3.0
 # * cargo install podlet
 #   yq (https://github.com/mikefarah/yq/) version v4.50.1
+# * for RHEL 9.4 yq is available: dnf install yp
 
 set -euo pipefail
 
@@ -34,7 +32,7 @@ systemctl --user reset-failed sonarqube-sonarqube.service || true
 for i in quadlets.template/*; do
   BASE=$(basename $i)
   rm quadlets/$BASE || true
-  envsubst '$GIT_ROOT $HOME' <$i >quadlets/$BASE
+  envsubst '$GIT_ROOT $HOME $USERID' <$i >quadlets/$BASE
 done
 
 for i in quadlets/*; do
