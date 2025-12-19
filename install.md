@@ -267,10 +267,13 @@ Add a user timer to delay Grafana, instead of wrapping `systemctl`:
 Description=Delay Grafana start 2 minutes after user manager
 
 [Timer]
-OnStartupSec=2min
+# first run 2 min after boot
+OnStartupSec=120s
 # Alternatives:
-# OnActiveSec=2min          # first run 2 min after timer activation (or omit for immediate)
-# OnUnitActiveSec=2min      # then every 2 min after each activation
+# first run 2 min after timer activation (or omit for immediate)
+OnActiveSec=120s
+# then every 2 min after each activation
+OnUnitActiveSec=120s
 Unit=sonarqube-grafana.service
 
 [Install]
