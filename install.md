@@ -209,6 +209,29 @@ psql -U sonar postgresql://pg_sonar:5432/sonar
 Password for user sonar:
 ```
 
+### Debug systemd
+
+`machinectl` can help you *reach* the user instance more cleanly, but it does not create one; you still need the per‑user systemd (via lingering/logind) or you will keep getting “no medium found”.[^6_1][^6_2]
+
+## Using machinectl to run `systemctl --user` as `pascht`
+
+Once a user instance exists (e.g. after `loginctl enable-linger pascht` and a reboot), you can do from root:
+
+```bash
+sudo machinectl shell pascht@ /usr/bin/systemctl --user status sonarqube-grafana.service
+```
+
+or an interactive shell and then run `systemctl --user` inside it:
+
+```bash
+sudo machinectl shell pascht@
+# now inside the shell:
+systemctl --user status
+systemctl --user list-units 'sonarqube-*'
+```
+
+`machinectl shell user@.host` (shortened to `user@`) starts a shell in the context of that user on the local host and lets `systemctl --user` talk to the correct bus without hand‑crafting `DBUS_SESSION_BUS_ADDRESS` / `XDG_RUNTIME_DIR`.
+
 ## Firewall
 
 ```sh
@@ -233,3 +256,34 @@ sudo firewall-cmd --reload
 ```sh
 ```
 
+## Timers for delayed start (needed on RHEL)
+
+Add a user timer to delay Grafana, instead of wrapping `systemctl`:
+
+`~/.config/systemd/user/sonarqube-grafana-delay.timer`:
+
+```ini
+[Unit]
+Description=Delay Grafana start 2 minutes after user manager
+
+[Timer]
+OnStartupSec=2min
+# Alternatives:
+# OnActiveSec=2min          # first run 2 min after timer activation (or omit for immediate)
+# OnUnitActiveSec=2min      # then every 2 min after each activation
+Unit=sonarqube-grafana.service
+
+[Install]
+WantedBy=default.target
+```
+
+Enable it in the user instance (once, as `pascht`):
+
+```bash
+systemctl --user daemon-reload
+systemctl --user enable --now sonarqube-grafana-delay.timer
+```
+
+With lingering enabled, the user instance (and thus the timer and quadlets) will exist at boot, and the timer will start `sonarqube-grafana.service` 2 minutes after the user manager comes up, without needing `machinectl` or any `systemctl` in `ExecStart`.
+
+Make the same for `sonarqube-caddy` as well, adjusting the names accordingly and use a 3 minute delay.
