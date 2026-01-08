@@ -1,7 +1,9 @@
 {
 	# http_port {$CADDY_HTTP_PORT}
 	# https_port {$CADDY_HTTPS_PORT}
-	auto_https off
+
+	email {$ABUSE_EMAIL}
+	auto_https {$AUTO_HTTPS_SWITCH}
 
 	log {
 		output stderr
@@ -39,21 +41,22 @@ prometheus.{$SUBDOMAIN}:80 {
 
 # HTTPS virtual hosts (port 443) with on‑demand internal certs
 sonarqube.{$SUBDOMAIN}:443 {
-	tls internal {
+	# https://caddyserver.com/docs/caddyfile/directives/tls
+	tls {$MAYBE_INTERNAL} {
 		on_demand
 	}
 	reverse_proxy http://sonarqube:9000
 }
 
 grafana.{$SUBDOMAIN}:443 {
-	tls internal {
+	tls {$MAYBE_INTERNAL} {
 		on_demand
 	}
 	reverse_proxy http://grafana:{$GF_SERVER_HTTP_PORT}
 }
 
 prometheus.{$SUBDOMAIN}:443 {
-	tls internal {
+	tls {$MAYBE_INTERNAL} {
 		on_demand
 	}
 	# TODO: change this to the configured port
