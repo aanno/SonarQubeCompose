@@ -14,6 +14,7 @@ Probably a invisible space (or other character) in the MS Entra Setup. Best thin
 
 * https://community.sonarsource.com/t/after-upgrade-to-sonarqube-developer-edition-v2025-1-102418-saml-authentication-failed/135832/3
 * https://github.com/structurizr/onpremises/discussions/99
+* https://community.blackduck.com/s/article/401-Unauthorized-error-when-logging-in-with-SAML (case #5)
 
 
 ## References
