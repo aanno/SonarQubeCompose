@@ -5,7 +5,7 @@ After=sonarqube-sonarqube.service sonarqube-pg_sonar_exporter.service node-expor
 [Container]
 HostName=prometheus
 Exec='--config.file=/etc/prometheus/prometheus.yml' '--storage.tsdb.path=/prometheus' --web.enable-lifecycle --web.enable-admin-api '--web.listen-address=:9099'
-Image=quay.io/prometheus/prometheus:v3.8.0
+Image=quay.io/prometheus/prometheus:v3.11.3
 Network=sonarqube
 Network=exporter
 

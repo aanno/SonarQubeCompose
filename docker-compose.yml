@@ -71,7 +71,7 @@ services:
       - "9187:9187"
   prometheus:
     # image: quay.io/prometheus/prometheus:latest
-    image: quay.io/prometheus/prometheus:v3.8.0
+    image: quay.io/prometheus/prometheus:v3.11.3
     restart: unless-stopped
     volumes:
       - $PWD/prometheus.yml:/etc/prometheus/prometheus.yml:z,ro
@@ -97,6 +97,16 @@ services:
     depends_on:
       - sonarqube
       - pg_sonar_exporter
+  pushgateway:
+    # image: docker.io/prom/pushgateway
+    image: quay.io/prometheus/pushgateway:v1.11.2
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "9091:9091"
+    networks:
+      - sonarqube
   grafana:
     image: docker.io/grafana/grafana-oss:latest
     restart: unless-stopped

@@ -62,3 +62,10 @@ prometheus.{$SUBDOMAIN}:443 {
 	# TODO: change this to the configured port
 	reverse_proxy http://prometheus:9099
 }
+
+pushgateway.{$SUBDOMAIN}:443 {
+	tls {$MAYBE_INTERNAL} {
+		on_demand
+	}
+	reverse_proxy http://pushgateway:9091
+}

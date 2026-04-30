@@ -250,6 +250,8 @@ sudo firewall-cmd --permanent --zone=public --add-port=3010/tcp
 sudo firewall-cmd --permanent --zone=public --add-port=9000/tcp
 sudo firewall-cmd --permanent --zone=public --add-port=9099/tcp
 
+sudo firewall-cmd --permanent --zone=public --add-port=9091/tcp
+
 sudo firewall-cmd --reload
 ```
 

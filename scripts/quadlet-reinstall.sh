@@ -31,6 +31,7 @@ systemctl --user reset-failed sonarqube-pg_sonar_exporter.service || true
 systemctl --user reset-failed sonarqube-pg_sonar.service || true
 systemctl --user reset-failed sonarqube-pod.service || true
 systemctl --user reset-failed sonarqube-prometheus.service || true
+systemctl --user reset-failed sonarqube-pushgateway.service || true
 systemctl --user reset-failed sonarqube-sonarqube.service || true
 
 for i in quadlets.template/*; do
