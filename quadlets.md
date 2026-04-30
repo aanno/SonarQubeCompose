@@ -29,9 +29,26 @@ sonarqube-sonarqube.service         generated -
 8 unit files listed.
 
 # Test parsing
-/usr/libexec/podman/quadlet --dryrun --user ~/.config/containers/systemd/sonarqube.pod
 
-``
+```sh
+/usr/libexec/podman/quadlet --dryrun --user ~/.config/containers/systemd/sonarqube.pod
+```
+
+### debug pushgateway
+
+```sh
+# log into the VM as user that runs the sonarqube services.
+echo 'my_job_metric 1' | curl --data-binary @- \
+  http://localhost:9091/metrics/job/myjob
+```
+
+After that you should see the metric in prometheus.
+
+ATTENTION: Also test from external, i.e.
+
+```sh
+echo 'my_job_metric 1' | curl --data-binary @-   http://qs-node2:9091/metrics/job/myjob
+```
 
 ## portlet
 
