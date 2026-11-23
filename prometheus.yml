@@ -16,7 +16,7 @@ scrape_configs:
     http_headers:
       X-Sonar-Passcode:
         # TODO: put pc from .env here
-        values: ['my-secret-passcode']
+        values: ['alopdasHub@onn5']
     static_configs:
       - targets: ["sonarqube:9000"]
   - job_name: 'sonarqube-jmx'

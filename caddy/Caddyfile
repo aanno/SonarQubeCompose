@@ -69,3 +69,53 @@ pushgateway.{$SUBDOMAIN}:443 {
 	}
 	reverse_proxy http://pushgateway:9091
 }
+
+chat.{$SUBDOMAIN}:443 {
+  tls {$MAYBE_INTERNAL} {
+	on_demand
+  }
+  reverse_proxy http://10.2.0.6:8080
+}
+
+victoriametrics.{$SUBDOMAIN}:443 {
+  tls {$MAYBE_INTERNAL} {
+	on_demand
+  }
+  basic_auth {
+    gaeko $2a$14$DKTJOcEaKy3oqEDjpeBpF.jRcFbsDmsKdvGQGCvDerAfk2n9Xsmga
+    grafana $2a$14$EAkqDuePAo2pmkJJXvSE2.I0R1cmbHQdWef.6OnZZNLCJIRJQgADC
+  }
+  reverse_proxy http://10.2.0.6:8428
+}
+
+loki.{$SUBDOMAIN}:443 {
+  tls {$MAYBE_INTERNAL} {
+	on_demand
+  }
+  basic_auth {
+    gaeko $2a$14$DKTJOcEaKy3oqEDjpeBpF.jRcFbsDmsKdvGQGCvDerAfk2n9Xsmga
+    grafana $2a$14$8xQM1CbnCvhN66y8xChoH.mGmP5QA7OgEIkIu/Cqp5rh0LCgM6F5S
+  }
+  reverse_proxy http://10.2.0.6:3100
+}
+
+tempo.{$SUBDOMAIN}:443 {
+  tls {$MAYBE_INTERNAL} {
+	on_demand
+  }
+  basic_auth {
+    gaeko $2a$14$DKTJOcEaKy3oqEDjpeBpF.jRcFbsDmsKdvGQGCvDerAfk2n9Xsmga
+    grafana $2a$14$8xQM1CbnCvhN66y8xChoH.mGmP5QA7OgEIkIu/Cqp5rh0LCgM6F5S
+  }
+  reverse_proxy http://10.2.0.6:3200
+}
+
+alloy.{$SUBDOMAIN}:443 {
+  tls {$MAYBE_INTERNAL} {
+	on_demand
+  }
+  basic_auth {
+    gaeko $2a$14$DKTJOcEaKy3oqEDjpeBpF.jRcFbsDmsKdvGQGCvDerAfk2n9Xsmga
+  }
+  reverse_proxy http://10.2.0.6:12345
+}
